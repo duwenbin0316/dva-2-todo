@@ -3,7 +3,7 @@ import { List } from "antd";
 
 function todoList(props) {
 
-    const { todos, dispatch } = props;
+    const { todos, dispatch, loading } = props;
 
     function handleToggle(id) {
         dispatch({
@@ -12,9 +12,16 @@ function todoList(props) {
         })
     }
 
+    function handleDelete(id) {
+        dispatch({
+            type: 'todo/remove',
+            payload: id
+        })
+    }
+
     function renderItem(item) {
         return (
-            <List.Item actions={[<a onClick={() => handleToggle(item.id)}>toogle</a>, <a>delete</a>]}>
+            <List.Item actions={[<a onClick={() => handleToggle(item.id)}>toogle</a>, <a onClick={() => handleDelete(item.id)}>delete</a>]}>
                 <div>{item.text} - {item.completed ? "已完成" : "未完成"}</div>
             </List.Item>
         )
@@ -25,6 +32,7 @@ function todoList(props) {
         header={<h3>Todos:</h3>}
         dataSource={todos}
         renderItem={renderItem}
+        loading={loading}
         >
         </List>
     )
