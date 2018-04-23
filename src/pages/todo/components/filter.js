@@ -1,13 +1,16 @@
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 
 function filter(props) {
     const { filter, dispatch } = props;
 
     function handleChange(_filter) {
-        dispatch({
-            type: 'todo/setFilter',
-            payload: _filter
-        })
+        dispatch(routerRedux.push({
+            pathname: '/todo',
+            query: { 
+                filter: _filter
+            },
+        }));
     }
 
     function addFilterItem(_filter, text) {
